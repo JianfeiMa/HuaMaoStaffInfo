@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjf.hmsi.dao.StaffDAO">
+
+	<resultMap type="com.mjf.hmsi.bean.Staff" id="BaseResultMap">
+		<result column="name" property="name" jdbcType="VARCHAR"/>
+		<result column="department" property="department" jdbcType="VARCHAR"/>
+		<result column="twoFourNineN" property="twoFourNineN" jdbcType="VARCHAR"/>
+		<result column="twoFourNineP" property="twoFourNineP" jdbcType="VARCHAR"/>
+		<result column="ip" property="ip" jdbcType="VARCHAR"/>
+		<result column="inMail" property="inMail" jdbcType="VARCHAR"/>
+		<result column="outMail" property="outMail" jdbcType="VARCHAR"/>
+		<result column="mailPassword" property="mailPassword" jdbcType="VARCHAR"/>
+		<result column="startUpPassword" property="startUpPassword" jdbcType="VARCHAR"/>
+		<result column="lockPassword" property="lockPassword" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<insert id="staffRegist" parameterType="com.mjf.hmsi.bean.Staff">
+		insert into staff (name,department,twoFourNineN,twoFourNineP,ip,inMail,outMail,mailPassword,startUpPassword,lockPassword,whetherYK,domainName,createUserT,recentlyAlterT)
+		value(#{name,jdbcType=VARCHAR},
+			  #{department,jdbcType=VARCHAR},
+			  #{twoFourNineN,jdbcType=VARCHAR},
+			  #{twoFourNineP,jdbcType=VARCHAR},
+			  #{ip,jdbcType=VARCHAR},
+			  #{inMail,jdbcType=VARCHAR},
+			  #{outMail,jdbcType=VARCHAR},
+			  #{mailPassword,jdbcType=VARCHAR},
+			  #{startUpPassword,jdbcType=VARCHAR},
+			  #{lockPassword,jdbcType=VARCHAR},
+			  #{whetherYK,jdbcType=TINYINT},
+			  #{domainName,jdbcType=VARCHAR},
+			  #{createUserT,jdbcType=TIMESTAMP},
+			  #{recentlyAlterT,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="staffSelect" parameterType="String" resultType="com.mjf.hmsi.bean.Staff">
+		select * from staff where department=#{department,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="staffSelectBy3IP" parameterType="String" resultType="com.mjf.hmsi.bean.Staff">
+		select * from staff where ip like #{ip,jdbcType=VARCHAR} order by ip desc;
+	</select>
+	
+	<select id="staffSelectByName" parameterType="String" resultType="com.mjf.hmsi.bean.Staff">
+		select * from staff where name=#{name,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="staffSelectByTwo49" parameterType="String" resultType="com.mjf.hmsi.bean.Staff">
+		select * from staff where twoFourNineN=#{twoFourNineN,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="staffSelectByIP" parameterType="String" resultType="com.mjf.hmsi.bean.Staff">
+		select * from staff where ip=#{ip,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="staffSelectByMail" parameterType="String" resultType="com.mjf.hmsi.bean.Staff">
+		select * from staff WHERE inMail LIKE #{inMail,jdbcType=VARCHAR} or outMail LIKE #{outMail,jdbcType=VARCHAR};
+	</select>
+	
+	<update id="staffUpate" parameterType="com.mjf.hmsi.bean.StaffUpdate">
+		update staff set name = #{name,jdbcType=VARCHAR},
+						 department = #{department,jdbcType=VARCHAR},
+						 twoFourNineN = #{twoFourNineN,jdbcType=VARCHAR},
+						 twoFourNineP = #{twoFourNineP,jdbcType=VARCHAR},
+						 ip = #{ip,jdbcType=VARCHAR},
+						 inMail = #{inMail,jdbcType=VARCHAR},
+						 outMail = #{outMail,jdbcType=VARCHAR},
+						 MailPassword = #{mailPassword,jdbcType=VARCHAR},
+						 startUpPassword = #{startUpPassword,jdbcType=VARCHAR},
+						 lockPassword = #{lockPassword,jdbcType=VARCHAR},
+						 whetherYK = #{whetherYK,jdbcType=VARCHAR},
+						 domainName = #{domainName,jdbcType=VARCHAR},
+						 recentlyAlterT = #{recentlyAlterT,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<delete id="staffDelete">
+		delete from staff where id = #{id,jdbcType=INTEGER}
+	</delete>
+</mapper>
